@@ -56,7 +56,7 @@ class Rule
         for (int i = 0; i < input.Length; i++)
         {
             int w = input[i];
-            binput[i] = w == wildcard ? (byte)0xff : Helper.FirstNonZeroPosition(w);
+            binput[i] = w == wildcard ? (byte)0xff : (byte)System.Numerics.BitOperations.TrailingZeroCount(w);
         }
     }
 
@@ -162,7 +162,7 @@ class Rule
                 for (int x = 0; x < MX; x++) result[x + y * MX + z * MX * MY] = lineszy[x];
             }
         }
-        
+
         return (result, MX, MY, MZ);
     }
 
@@ -238,7 +238,7 @@ class Rule
                 Interpreter.WriteLine($"odd width {FX} in {fileString}");
                 return null;
             }
-            
+
             IMX = OMX = FX / 2;
             IMY = OMY = FY;
             IMZ = OMZ = FZ;

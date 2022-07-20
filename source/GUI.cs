@@ -26,7 +26,7 @@ static class GUI
         int b0 = bitmap[0];
         int b1 = bitmap[width - 1];
         fonts[0] = (bitmap.Select(argb => argb != b0 && argb != b1).ToArray(), width / 32, height / 3);
-        
+
         (bitmap, width, height, _) = Graphics.LoadBitmap($"resources/fonts/{TITLEFONT}.png");
         b0 = bitmap[0];
         b1 = bitmap[width - 1];
@@ -236,7 +236,7 @@ static class GUI
                                 byte[] substrate = Helper.NonZeroPositions(field.substrate);
                                 for (int k = 0; k < substrate.Length; k++, x += S) drawSquare(x, y, S, characters[substrate[k]]);
                             }
-                            
+
                             x = level * HINDENT;
                             y += fonts[0].FY;
                         }
@@ -279,12 +279,6 @@ static class GUI
                         drawSquare(x, y + VSHIFT, S, characters[path.value]);
                         y += fonts[0].FY + VSKIP;
                     }
-                }
-                else if (node is MapNode)
-                {
-                    Console.WriteLine("ERROR! Map is Branch");
-                    write("map", x, y, NODECOLOR);
-                    y += fonts[0].FY + VSKIP;
                 }
                 else if (node is ConvolutionNode convnode)
                 {
