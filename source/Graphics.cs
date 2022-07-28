@@ -5,6 +5,13 @@ using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Collections.Generic;
+using System.Linq;
+
+public static class EnumExtension
+{
+    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self) =>
+        self?.Select((item, index) => (item, index)) ?? Enumerable.Empty<(T, int)>();
+}
 
 static class Graphics
 {
@@ -29,6 +36,23 @@ static class Graphics
             using var image = Image.WrapMemory<Bgra32>(pData, width, height);
             image.SaveAsPng(filename);
         }
+    }
+
+    public unsafe static void SaveGif(List<int[]> images, int width, int height, string filename)
+    {
+        Console.WriteLine($"SaveGif images.len = {images.Count}");
+        var gif = new Image<Bgra32>(width, height);
+        foreach (var (data, i) in images.WithIndex())
+        {
+            fixed (int* pData = data)
+            {
+                var image = Image.WrapMemory<Bgra32>(pData, width, height);
+                image.Frames.RootFrame.Metadata.GetGifMetadata().FrameDelay = 2;
+                gif.Frames.AddFrame(image.Frames.RootFrame);
+            }
+        }
+        gif.Frames.RemoveFrame(0);
+        gif.SaveAsGif(filename);
     }
 
     public static (int[], int, int) Render(byte[] state, int MX, int MY, int MZ, int[] colors, int pixelsize, int MARGIN) => MZ == 1 ? BitmapRender(state, MX, MY, colors, pixelsize, MARGIN) : IsometricRender(state, MX, MY, MZ, colors, pixelsize, MARGIN);
@@ -135,7 +159,7 @@ static class Graphics
         {
             sprite = new Sprite(blocksize);
             sprites.Add(blocksize, sprite);
-        }       
+        }
 
         for (int i = 0; i < visibleVoxels.Length; i++) foreach (Voxel s in visibleVoxels[i])
             {

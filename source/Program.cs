@@ -53,6 +53,9 @@ static class Program
             int steps = xmodel.Get("steps", gif ? 1000 : 50000);
             int gui = xmodel.Get("gui", 0);
             if (gif) amount = 1;
+            List<int[]> images = new List<int[]>();
+            int gif_width = 0;
+            int gif_height = 0;
 
             Dictionary<char, int> customPalette = new(palette);
             foreach (var x in xmodel.Elements("color")) customPalette[x.Get<char>("symbol")] = (255 << 24) + Convert.ToInt32(x.Get<string>("value"), 16);
@@ -60,18 +63,29 @@ static class Program
             for (int k = 0; k < amount; k++)
             {
                 int seed = seeds != null && k < seeds.Length ? seeds[k] : meta.Next();
+                string outputname = $"output/{name}_{seed}";
                 foreach ((byte[] result, char[] legend, int FX, int FY, int FZ) in interpreter.Run(seed, steps, gif))
                 {
                     int[] colors = legend.Select(ch => customPalette[ch]).ToArray();
-                    string outputname = gif ? $"output/{interpreter.counter}" : $"output/{name}_{seed}";
                     if (FZ == 1 || iso)
                     {
                         var (bitmap, WIDTH, HEIGHT) = Graphics.Render(result, FX, FY, FZ, colors, pixelsize, gui);
                         if (gui > 0) GUI.Draw(name, interpreter.root, interpreter.current, bitmap, WIDTH, HEIGHT, customPalette);
-                        Graphics.SaveBitmap(bitmap, WIDTH, HEIGHT, outputname + ".png");
+                        if (gif)
+                        {
+                            images.Add(bitmap);
+                            gif_width = WIDTH;
+                            gif_height = HEIGHT;
+                        }
+                        else
+                        {
+                            Graphics.SaveBitmap(bitmap, WIDTH, HEIGHT, outputname + ".png");
+                        }
+
                     }
                     else VoxHelper.SaveVox(result, (byte)FX, (byte)FY, (byte)FZ, colors, outputname + ".vox");
                 }
+                if (gif) Graphics.SaveGif(images, gif_width, gif_height, outputname + ".gif");
                 Console.WriteLine("DONE");
             }
         }

@@ -1,5 +1,5 @@
 <models>
-  <model name="Apartemazements" size="8" d="3" amount="4"/>
+  <!-- <model name="Apartemazements" size="8" d="3" amount="4"/>
   <model name="Apartemazements" size="8" d="3" iso="True" pixelsize="6" gui="150"/>
   <model name="CarmaTower" length="12" width="12" height="18"/>
   <model name="CarmaTower" length="12" width="12" height="18" iso="True" amount="1"/>
@@ -16,9 +16,9 @@
     <color symbol="E" value="93c08d" comment="forest"/>
     <color symbol="S" value="d0d8ac" comment="slopes"/>
     <color symbol="s" value="e9e0b2" comment="hills"/>
-  </model>
+  </model> -->
   
-  <model name="Backtracker" size="89"/>
+  <!-- <model name="Backtracker" size="89"/>
   <model name="BacktrackerCycle" size="59"/>
   <model name="Basic" size="60" steps="1000"/>
   <model name="BasicBrickWall" size="30"/>
@@ -160,7 +160,11 @@
   <model name="WaveBrickWall" size="50"/>
   <model name="WaveDungeon" size="50"/>
   <model name="WaveFlowers" size="60"/>
-  <model name="WolfBasedApproach" size="70" steps="300"/>
+  <model name="WolfBasedApproach" size="70" steps="300"/> -->
+  <!-- <model name="MazeGrowth" size="120"/> -->
+  <model name="WaveDungeon" size="50" steps="1500" gif="True"/>
+  <!-- <model name="BiasedGrowth" size="50" steps="2000" gif="False"/> -->
+
   
   gifs
   <!--<model name="Wilson" size="59" steps="1000" gui="150" gif="True"/>-->
