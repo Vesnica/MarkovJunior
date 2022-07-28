@@ -162,9 +162,12 @@
   <model name="WaveFlowers" size="60"/>
   <model name="WolfBasedApproach" size="70" steps="300"/> -->
   <!-- <model name="MazeGrowth" size="120"/> -->
-  <model name="WaveDungeon" size="50" steps="1500" gif="True"/>
+  <!-- <model name="WaveDungeon" size="50" steps="1500" gif="True"/> -->
   <!-- <model name="BiasedGrowth" size="50" steps="2000" gif="False"/> -->
-
+  <!-- <model name="SequentialSokoban" size="20" gif="True"/> -->
+  <!-- <model name="GameOfLife" size="120" steps="100" gif="True"/> -->
+  <!-- <model name="BasicBrickWall" size="30" gif="True"/> -->
+  <model name="WaveFlowers" size="60" gif="True"/>
   
   gifs
   <!--<model name="Wilson" size="59" steps="1000" gui="150" gif="True"/>-->

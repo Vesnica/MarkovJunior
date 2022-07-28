@@ -53,7 +53,7 @@ static class Program
             int steps = xmodel.Get("steps", gif ? 1000 : 50000);
             int gui = xmodel.Get("gui", 0);
             if (gif) amount = 1;
-            List<int[]> images = new List<int[]>();
+            List<int[]> images = new();
             int gif_width = 0;
             int gif_height = 0;
 
