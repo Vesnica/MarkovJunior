@@ -5,13 +5,6 @@ using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Collections.Generic;
-using System.Linq;
-
-public static class EnumExtension
-{
-    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self) =>
-        self?.Select((item, index) => (item, index)) ?? Enumerable.Empty<(T, int)>();
-}
 
 static class Graphics
 {
@@ -40,9 +33,8 @@ static class Graphics
 
     public unsafe static void SaveGif(List<int[]> images, int width, int height, string filename)
     {
-        Console.WriteLine($"SaveGif images.len = {images.Count}");
         var gif = new Image<Bgra32>(width, height);
-        foreach (var (data, i) in images.WithIndex())
+        foreach (var data in images)
         {
             fixed (int* pData = data)
             {
