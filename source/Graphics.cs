@@ -33,12 +33,12 @@ static class Graphics
 
     public unsafe static void SaveGif(List<int[]> images, int width, int height, string filename)
     {
-        var gif = new Image<Bgra32>(width, height);
+        using var gif = new Image<Bgra32>(width, height);
         foreach (var data in images)
         {
             fixed (int* pData = data)
             {
-                var image = Image.WrapMemory<Bgra32>(pData, width, height);
+                using var image = Image.WrapMemory<Bgra32>(pData, width, height);
                 image.Frames.RootFrame.Metadata.GetGifMetadata().FrameDelay = 2;
                 gif.Frames.AddFrame(image.Frames.RootFrame);
             }
